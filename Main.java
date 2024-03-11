@@ -4,15 +4,20 @@ import database.Dados;
 import models.Pessoa;
 import models.PessoaFisica;
 import models.PessoaJuridica;
+import models.Veiculo;
 import repositories.PessoaRepository;
+import repositories.VeiculoRepository;
+import utils.TipoVeiculo;
 
 public class Main {
     
     public static void main(String[] args) throws Exception {
         // Inicializando Objetos e Repositorios com dados Mockup
         PessoaRepository listaClientes = new PessoaRepository(new ArrayList<>());
+        VeiculoRepository listaVeiculos = new VeiculoRepository(new ArrayList<>());
 
         Pessoa pessoa;
+        Veiculo veiculo;
 
         
         // Cadastrando Cliente PF e PJ em Memoria
@@ -21,10 +26,21 @@ public class Main {
         listaClientes.salvar(new PessoaJuridica("Levi e Ana Assessoria Jurídica Ltda", "25.408.179/0001-41"));
         listaClientes.salvar(new PessoaJuridica("Jéssica e Jorge Locações de Automóveis ME", "22.415.053/0001-06")); // Repetido
         
+        // Cadastrando Veiculo em Memoria
+        listaVeiculos.salvar(new Veiculo("MZU-3079","Toyota",  TipoVeiculo.SUV));
+        listaVeiculos.salvar(new Veiculo("MZU-3079","Toyota",  TipoVeiculo.SUV)); // Repetido
+        listaVeiculos.salvar(new Veiculo("MRH-1604","Toyota",  TipoVeiculo.SEDAN));
+        System.out.println();
+
         // Listando Veiculo e Clientes em Memoria
         System.out.println("=== LISTA DE CLIENTES ===");
         for (int i = 0; i < listaClientes.listarTodos().size(); i++) {
             System.out.println(listaClientes.listarTodos().get(i));
+        }
+        System.out.println();
+        System.out.println("=== LISTA DE VEICULOS ===");
+        for (int i = 0; i < listaVeiculos.listarTodos().size(); i++) {
+            System.out.println(listaVeiculos.listarTodos().get(i));
         }
         System.out.println();
         
