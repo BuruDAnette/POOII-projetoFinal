@@ -1,10 +1,10 @@
-package interfaces;
+package src.interfaces;
 
 import java.util.List;
 
-import models.Pessoa;
-import models.PessoaFisica;
-import models.PessoaJuridica;
+import src.models.Pessoa;
+import src.models.PessoaFisica;
+import src.models.PessoaJuridica;
 
 /**
  * The interface Pessoa repository.

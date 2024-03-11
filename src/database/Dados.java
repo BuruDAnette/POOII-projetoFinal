@@ -1,13 +1,13 @@
-package database;
+package src.database;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Pessoa;
-import models.PessoaFisica;
-import models.PessoaJuridica;
-import models.Veiculo;
-import utils.TipoVeiculo;
+import src.models.Pessoa;
+import src.models.PessoaFisica;
+import src.models.PessoaJuridica;
+import src.models.Veiculo;
+import src.utils.TipoVeiculo;
 
 /**
  * The type Dados.

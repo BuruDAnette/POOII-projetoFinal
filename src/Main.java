@@ -1,13 +1,14 @@
+package src;
 import java.util.ArrayList;
 
-import database.Dados;
-import models.Pessoa;
-import models.PessoaFisica;
-import models.PessoaJuridica;
-import models.Veiculo;
-import repositories.PessoaRepository;
-import repositories.VeiculoRepository;
-import utils.TipoVeiculo;
+import src.database.Dados;
+import src.models.Pessoa;
+import src.models.PessoaFisica;
+import src.models.PessoaJuridica;
+import src.models.Veiculo;
+import src.repositories.PessoaRepository;
+import src.repositories.VeiculoRepository;
+import src.utils.TipoVeiculo;
 
 public class Main {
     
@@ -15,6 +16,8 @@ public class Main {
         // Inicializando Objetos e Repositorios com dados Mockup
         PessoaRepository listaClientes = new PessoaRepository(new ArrayList<>());
         VeiculoRepository listaVeiculos = new VeiculoRepository(new ArrayList<>());
+
+        Locadora locadora = new Locadora("Brasil");
 
         Pessoa pessoa;
         Veiculo veiculo;
@@ -59,5 +62,11 @@ public class Main {
             System.out.println("cnpj n encontrado");
         }
         
+        // Alugando Veiculos Disponiveis PF e PJ
+        pessoa = listaClientes.consultarCPF("923.519.448-28");
+        veiculo = listaVeiculos.consultar("MZU-3079");
+
+        locadora.alugar(veiculo, pessoa);
+        System.out.println();
     }
 }

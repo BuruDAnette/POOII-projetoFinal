@@ -1,11 +1,11 @@
-package repositories;
+package src.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import interfaces.IVeiculoRepository;
-import models.Veiculo;
+import src.interfaces.IVeiculoRepository;
+import src.models.Veiculo;
 
 public class VeiculoRepository implements IVeiculoRepository {
 

@@ -1,8 +1,8 @@
-package models;
+package src.models;
 
 import java.time.LocalDateTime;
 
-import utils.TipoVeiculo;
+import src.utils.TipoVeiculo;
 
 public class Veiculo {
     

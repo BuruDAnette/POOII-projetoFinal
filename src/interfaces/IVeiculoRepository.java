@@ -1,8 +1,8 @@
-package interfaces;
+package src.interfaces;
 
 import java.util.List;
 
-import models.Veiculo;
+import src.models.Veiculo;
 
 public interface IVeiculoRepository {
     Veiculo salvar(Veiculo veiculo);

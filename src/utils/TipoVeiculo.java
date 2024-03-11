@@ -1,4 +1,4 @@
-package utils;
+package src.utils;
 
 public enum TipoVeiculo {
     HATCH_BACK("HATCH BACK"), 

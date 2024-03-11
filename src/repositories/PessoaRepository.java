@@ -1,12 +1,12 @@
-package repositories;
+package src.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import interfaces.IPessoaRepository;
-import models.Pessoa;
-import models.PessoaFisica;
-import models.PessoaJuridica;
+import src.interfaces.IPessoaRepository;
+import src.models.Pessoa;
+import src.models.PessoaFisica;
+import src.models.PessoaJuridica;
 
 /**
  * The type Pessoa repository.
