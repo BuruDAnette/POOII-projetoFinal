@@ -7,9 +7,17 @@ import models.Pessoa;
 import models.PessoaFisica;
 import models.PessoaJuridica;
 
+/**
+ * The type Dados.
+ */
 public class Dados {
     private List<Pessoa> listaDeClientes;
 
+    /**
+     * Gerar clientes list.
+     *
+     * @return the list
+     */
     public List<Pessoa> gerarClientes() {
         List<Pessoa> clientes = new ArrayList<>();
 

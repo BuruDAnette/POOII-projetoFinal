@@ -8,13 +8,27 @@ import models.Pessoa;
 import models.PessoaFisica;
 import models.PessoaJuridica;
 
+/**
+ * The type Pessoa repository.
+ */
 public class PessoaRepository implements IPessoaRepository {
+    /**
+     * The Lista de clientes.
+     */
     List<Pessoa> listaDeClientes;
 
+    /**
+     * Instantiates a new Pessoa repository.
+     *
+     * @param listaDeClientes the lista de clientes
+     */
     public PessoaRepository(List<Pessoa> listaDeClientes) {
         this.listaDeClientes = listaDeClientes;
     }
 
+    /**
+     * Instantiates a new Pessoa repository.
+     */
     public PessoaRepository() {
         this.listaDeClientes = new ArrayList<>();
     }
