@@ -12,7 +12,7 @@ Cria uma aplicação que gerencie o aluguel de veículos, aplicando os conceitos
     Alugar um veículo para pessoa física e jurídica;
     Devolver um veículo para pessoa física e jurídica;
 
-## Regras de negócio
+### Regras de negócio
 
     RN1: Os veículos não podem ser repetidos; Pode utilizar a placa como identificador de unicidade;
     RN2: Tipos de veículos que serão considerados: PEQUENO, MEDIO e SUV;
@@ -24,7 +24,7 @@ Cria uma aplicação que gerencie o aluguel de veículos, aplicando os conceitos
         Caso o cliente pessoa física tenha ficado com o carro mais que 5 diárias terá direito a 5% de desconto.
         Caso o cliente pessoa jurídica tenha ficado com o carro mais que 3 diárias terá direito a 10% de desconto.
 
-Valores base da diária por tipo de veículo:
+* Valores base da diária por tipo de veículo:
 
 | Tipo de Veículo | Valor por dia | | --------------- | ------------- | | PEQUENO | R100,00∣∣MEDIO∣R100,00∣∣MEDIO∣R 150,00 | | SUV | R$ 200,00 |
 Itens bônus - Opcionais

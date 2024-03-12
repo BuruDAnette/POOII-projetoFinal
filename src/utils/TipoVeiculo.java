@@ -1,8 +1,20 @@
 package src.utils;
 
+/**
+ * The enum Tipo veiculo.
+ */
 public enum TipoVeiculo {
-    HATCH_BACK("HATCH BACK"), 
-    SEDAN("SEDAN"), 
+    /**
+     * The Hatch back.
+     */
+    HATCH_BACK("HATCH BACK"),
+    /**
+     * Sedan tipo veiculo.
+     */
+    SEDAN("SEDAN"),
+    /**
+     * Suv tipo veiculo.
+     */
     SUV("SUV");
 
     private final String descricao;
@@ -11,6 +23,11 @@ public enum TipoVeiculo {
         descricao = nomeTipo;
     }
 
+    /**
+     * Get nome tipo string.
+     *
+     * @return the string
+     */
     public String getNomeTipo(){
         return descricao;
     }

@@ -2,7 +2,18 @@ package src.models;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The type Recibo.
+ */
 public class Recibo {
+    /**
+     * Listar informacoes de aluguel.
+     *
+     * @param <T>     the type parameter
+     * @param veiculo the veiculo
+     * @param pessoa  the pessoa
+     * @param local   the local
+     */
     public static <T extends Pessoa> void listarInformacoesDeAluguel(Veiculo veiculo, T pessoa, String local) {
         System.out.println("=== VEÍCULO ALUGADO COM SUCESSO ===");
         System.out.println("Carro: " + veiculo.getMarca());

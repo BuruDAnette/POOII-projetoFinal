@@ -10,10 +10,15 @@ import src.models.PessoaJuridica;
 
 /**
  * The type Pessoa repository.
+ *
+ * @param <T> the type parameter
  */
 public class PessoaRepository<T extends Pessoa> implements IPessoaRepository<T> {
     private List<T> listaDeClientes;
 
+    /**
+     * Instantiates a new Pessoa repository.
+     */
     public PessoaRepository() {
         this.listaDeClientes = new ArrayList<>();
     }

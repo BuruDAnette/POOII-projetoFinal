@@ -6,9 +6,15 @@ import java.util.List;
 import src.interfaces.IVeiculoRepository;
 import src.models.Veiculo;
 
+/**
+ * The type Veiculo repository.
+ */
 public class VeiculoRepository implements IVeiculoRepository<Veiculo> {
     private List<Veiculo> listaVeiculos;
 
+    /**
+     * Instantiates a new Veiculo repository.
+     */
     public VeiculoRepository() {
         this.listaVeiculos = new ArrayList<>();
     }
