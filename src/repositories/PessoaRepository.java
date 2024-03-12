@@ -11,37 +11,17 @@ import src.models.PessoaJuridica;
 /**
  * The type Pessoa repository.
  */
-public class PessoaRepository implements IPessoaRepository {
-    /**
-     * The Lista de clientes.
-     */
-    List<Pessoa> listaDeClientes;
+public class PessoaRepository<T extends Pessoa> implements IPessoaRepository<T> {
+    private List<T> listaDeClientes;
 
-    /**
-     * Instantiates a new Pessoa repository.
-     *
-     * @param listaDeClientes the lista de clientes
-     */
-    public PessoaRepository(List<Pessoa> listaDeClientes) {
-        this.listaDeClientes = listaDeClientes;
-    }
-
-    /**
-     * Instantiates a new Pessoa repository.
-     */
     public PessoaRepository() {
         this.listaDeClientes = new ArrayList<>();
     }
 
     @Override
-    public Pessoa salvar(Pessoa pessoa) {
+    public T salvar(T pessoa) {
         if (validaClienteNaBaseDeDados(pessoa)) {
-            if(pessoa instanceof PessoaFisica){
-                System.out.println("CPF Já Existe na Base de Dados");
-            }
-            if(pessoa instanceof PessoaJuridica){
-                System.out.println("CNPJ Já Existe na Base de Dados");
-            }
+            System.out.println(pessoa instanceof PessoaFisica ? "CPF Já Existe na Base de Dados" : "CNPJ Já Existe na Base de Dados");
             return null;
         }
 
@@ -50,79 +30,51 @@ public class PessoaRepository implements IPessoaRepository {
     }
 
     @Override
-    public void atualizar(Pessoa pessoa) {
+    public void atualizar(T pessoa) {
         if (!validaClienteNaBaseDeDados(pessoa)) {
             listaDeClientes.remove(pessoa);
             salvar(pessoa);
         }
-
     }
 
     @Override
-    public boolean deletar(Pessoa pessoa) {
-        listaDeClientes.remove(pessoa);
-        return true;
+    public boolean deletar(T pessoa) {
+        return listaDeClientes.remove(pessoa);
     }
 
     @Override
     public PessoaFisica consultarCPF(String cpf) {
-        PessoaFisica pessoaFisica;
-        for (int i = 0; i < listaDeClientes.size(); i++) {
-            if (listaDeClientes.get(i) instanceof PessoaFisica) {
-                pessoaFisica = (PessoaFisica) listaDeClientes.get(i);
-                if (pessoaFisica.getCpf().equalsIgnoreCase(cpf)) {
-                    return pessoaFisica;
-                }
+        for (T cliente : listaDeClientes) {
+            if (cliente instanceof PessoaFisica && ((PessoaFisica) cliente).getCpf().equalsIgnoreCase(cpf)) {
+                return (PessoaFisica) cliente;
             }
-
         }
-
         return null;
     }
 
     @Override
-    public PessoaJuridica consultarCNPJ(String cpf) {
-        PessoaJuridica pessoaJuridica;
-        for (int i = 0; i < listaDeClientes.size(); i++) {
-            if (listaDeClientes.get(i) instanceof PessoaJuridica) {
-                pessoaJuridica = (PessoaJuridica) listaDeClientes.get(i);
-                if (pessoaJuridica.getCnpj().equalsIgnoreCase(cpf)) {
-                    return pessoaJuridica;
-                }
+    public PessoaJuridica consultarCNPJ(String cnpj) {
+        for (T cliente : listaDeClientes) {
+            if (cliente instanceof PessoaJuridica && ((PessoaJuridica) cliente).getCnpj().equalsIgnoreCase(cnpj)) {
+                return (PessoaJuridica) cliente;
             }
-
         }
-
         return null;
     }
 
     @Override
-    public List<Pessoa> listarTodos() {
+    public List<T> listarTodos() {
         return new ArrayList<>(listaDeClientes);
     }
 
-    private boolean validaClienteNaBaseDeDados(Pessoa pessoa) {
-        PessoaFisica pf;
+    private boolean validaClienteNaBaseDeDados(T pessoa) {
         if (pessoa instanceof PessoaFisica) {
-            pf = (PessoaFisica) pessoa;
-            String cpf = pf.getCpf();
-            pf = consultarCPF(cpf);
-            if (pf != null) {
-                return true;
-            }
+            return listaDeClientes.stream()
+                    .anyMatch(cliente -> cliente instanceof PessoaFisica && ((PessoaFisica) cliente).getCpf().equalsIgnoreCase(((PessoaFisica) pessoa).getCpf()));
+        } else if (pessoa instanceof PessoaJuridica) {
+            return listaDeClientes.stream()
+                    .anyMatch(cliente -> cliente instanceof PessoaJuridica && ((PessoaJuridica) cliente).getCnpj().equalsIgnoreCase(((PessoaJuridica) pessoa).getCnpj()));
         }
-
-        PessoaJuridica pj;
-        if (pessoa instanceof PessoaJuridica) {
-            pj = (PessoaJuridica) pessoa;
-            String cnpj = pj.getCnpj();
-            pj = consultarCNPJ(cnpj);
-            if (pj != null) {
-                return true;
-            }
-        }
-
         return false;
     }
-
 }

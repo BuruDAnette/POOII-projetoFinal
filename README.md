@@ -1,7 +1,8 @@
-**ADA LocateCar - Locadora de veículos**
+# ADA LocateCar - Locadora de veículos
 
 Cria uma aplicação que gerencie o aluguel de veículos, aplicando os conceitos vistos em aula, onde cada item abaixo seja considerado:
-*Itens obrigatórios*
+
+## Itens obrigatórios
 
     Cadastrar os veículos;
     Alterar um veículo cadastrado;
@@ -11,7 +12,7 @@ Cria uma aplicação que gerencie o aluguel de veículos, aplicando os conceitos
     Alugar um veículo para pessoa física e jurídica;
     Devolver um veículo para pessoa física e jurídica;
 
-*Regras de negócio*
+## Regras de negócio
 
     RN1: Os veículos não podem ser repetidos; Pode utilizar a placa como identificador de unicidade;
     RN2: Tipos de veículos que serão considerados: PEQUENO, MEDIO e SUV;

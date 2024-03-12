@@ -2,19 +2,12 @@ package src.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import src.interfaces.IVeiculoRepository;
 import src.models.Veiculo;
 
-public class VeiculoRepository implements IVeiculoRepository {
-
+public class VeiculoRepository implements IVeiculoRepository<Veiculo> {
     private List<Veiculo> listaVeiculos;
-    Scanner sc = new Scanner(System.in);
-
-    public VeiculoRepository(List<Veiculo> listaVeiculos) {
-        this.listaVeiculos = listaVeiculos;
-    }
 
     public VeiculoRepository() {
         this.listaVeiculos = new ArrayList<>();
@@ -28,7 +21,7 @@ public class VeiculoRepository implements IVeiculoRepository {
             listaVeiculos.add(veiculo);
             return veiculo;
         }
-        System.out.println("Esse veiculo já existe na base de dados.");
+        System.out.println("Esse veículo já existe na base de dados.");
         return null;
     }
 
@@ -37,27 +30,22 @@ public class VeiculoRepository implements IVeiculoRepository {
         Veiculo consultaVeiculo = consultar(veiculo.getPlaca());
 
         if (consultaVeiculo == null) {
-            throw new IllegalArgumentException("Esse veiculo não existe na base de dados.");
+            throw new IllegalArgumentException("Esse veículo não existe na base de dados.");
         }
         listaVeiculos.remove(veiculo);
         salvar(veiculo);
-
     }
 
     @Override
     public boolean deletar(Veiculo veiculo) {
-        if (consultar(veiculo.getPlaca()) == null) {
-            return false;
-        }
-        listaVeiculos.remove(veiculo);
-        return true;
+        return listaVeiculos.remove(veiculo);
     }
 
     @Override
     public Veiculo consultar(String placa) {
-        for (int i = 0; i < listaVeiculos.size(); i++) {
-            if (listaVeiculos.get(i).getPlaca().equals(placa)) {
-                return listaVeiculos.get(i);
+        for (Veiculo veiculo : listaVeiculos) {
+            if (veiculo.getPlaca().equals(placa)) {
+                return veiculo;
             }
         }
         return null;
@@ -67,5 +55,4 @@ public class VeiculoRepository implements IVeiculoRepository {
     public List<Veiculo> listarTodos() {
         return new ArrayList<>(listaVeiculos);
     }
-
 }

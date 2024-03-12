@@ -1,6 +1,6 @@
 package src.models;
 
-public abstract class Pessoa {
+public abstract class Pessoa implements Comparable<Pessoa> {
     private String nome;
 
     public Pessoa(String nome) {
@@ -15,4 +15,8 @@ public abstract class Pessoa {
         this.nome = nome;
     }
 
+    @Override
+    public int compareTo(Pessoa outraPessoa) {
+        return this.nome.compareTo(outraPessoa.getNome());
+    }
 }

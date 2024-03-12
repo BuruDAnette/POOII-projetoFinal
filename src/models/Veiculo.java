@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 
 import src.utils.TipoVeiculo;
 
-public class Veiculo {
-    
+public class Veiculo implements Comparable<Veiculo> {
     private String placa;
     private String marca;
     private Boolean disponivel;
@@ -20,10 +19,13 @@ public class Veiculo {
         this.tipoVeiculo = tipoVeiculo;
     }
 
+    // Getters e setters
+
+    
     public String getPlaca() {
         return placa;
     }
-
+    
     public Boolean getDisponivel() {
         return disponivel;
     }
@@ -35,32 +37,36 @@ public class Veiculo {
     public LocalDateTime getDiaAlugado() {
         return diaAlugado;
     }
-
+    
     public void setDiaAlugado(LocalDateTime diaAlugado) {
         this.diaAlugado = diaAlugado;
     }
-
+    
     public LocalDateTime getDiaDevolucao() {
         return diaDevolucao;
     }
-
+    
     public void setDiaDevolucao(LocalDateTime diaDevolucao) {
         this.diaDevolucao = diaDevolucao;
     }
-
+    
     public TipoVeiculo getTipoVeiculo() {
         return tipoVeiculo;
     }
-
+    
     public String getMarca() {
         return marca;
     }
-
+    
+    @Override
+    public int compareTo(Veiculo outroVeiculo) {
+        return this.placa.compareTo(outroVeiculo.placa);
+    }
     @Override
     public String toString() {
         return "Placa: " + placa
-               + " | Marca: " + marca
-               + " | Tipo: " + tipoVeiculo.getNomeTipo()
-               + " | Status: " + (getDisponivel() ? "DISPONIVEL" : "NÃO DISPONIVEL");
+            + " | Marca: " + marca
+            + " | Tipo: " + tipoVeiculo.getNomeTipo()
+            + " | Status: " + (getDisponivel() ? "DISPONIVEL" : "NÃO DISPONIVEL");
     }
 }
