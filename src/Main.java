@@ -46,6 +46,7 @@ public class Main {
             System.out.println("CNPJ não encontrado");
         }//acha
 
-        locadora.alugar(listaVeiculos, listaClientes, "MZU-3079", "923.519.448-28");
+        locadora.alugar(listaVeiculos, listaClientes, "MRH-1602", "923.519.448-28");
+        locadora.alugar(listaVeiculos, listaClientes, "MRH-1604", "923.519.448-28");
     }
 }
