@@ -1,6 +1,8 @@
 package src.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import src.utils.TipoVeiculo;
 
@@ -11,6 +13,7 @@ public class Veiculo implements Comparable<Veiculo> {
     private LocalDateTime diaAlugado;
     private LocalDateTime diaDevolucao;
     private TipoVeiculo tipoVeiculo;
+    private List<Veiculo> veiculos;
 
     public Veiculo(String placa, String marca, TipoVeiculo tipoVeiculo) {
         this.placa = placa;
@@ -56,6 +59,30 @@ public class Veiculo implements Comparable<Veiculo> {
     
     public String getMarca() {
         return marca;
+    }
+
+    public boolean isDisponivel() {
+        return this.diaAlugado == null;
+    }
+    
+    public List<Veiculo> listarDisponiveis() {
+    List<Veiculo> veiculos = new ArrayList<>();
+    for (Veiculo veiculo : this.veiculos) {
+        if (veiculo.isDisponivel()) {
+            veiculos.add(veiculo);
+        }
+    }
+    return veiculos;
+    }
+
+    public List<Veiculo> listarVeiculosAlugados() {
+        List<Veiculo> veiculos = new ArrayList<>();
+        for (Veiculo veiculo : this.veiculos) {
+            if (!veiculo.isDisponivel()) {
+                veiculos.add(veiculo);
+            }
+        }
+        return veiculos;
     }
     
     @Override

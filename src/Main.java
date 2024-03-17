@@ -1,5 +1,7 @@
 package src;
 
+import java.time.LocalDateTime;
+
 import src.models.Pessoa;
 import src.models.PessoaFisica;
 import src.models.PessoaJuridica;
@@ -24,7 +26,7 @@ public class Main {
 
         listaVeiculos.salvar(new Veiculo("MZU-3079", "Toyota", TipoVeiculo.SUV));
         listaVeiculos.salvar(new Veiculo("MZU-3079", "Toyota", TipoVeiculo.SUV)); // Repetido
-        listaVeiculos.salvar(new Veiculo("MRH-1604", "Toyota", TipoVeiculo.SEDAN));
+        listaVeiculos.salvar(new Veiculo("MRH-1604", "Toyota", TipoVeiculo.MEDIO));
 
         System.out.println("=== LISTA DE CLIENTES ===");
         listaClientes.listarTodos().forEach(System.out::println);
@@ -48,5 +50,8 @@ public class Main {
 
         locadora.alugar(listaVeiculos, listaClientes, "MRH-1602", "923.519.448-28");
         locadora.alugar(listaVeiculos, listaClientes, "MRH-1604", "923.519.448-28");
+
+        locadora.devolver(listaVeiculos, "MRH-1604", LocalDateTime.now());
+
     }
 }

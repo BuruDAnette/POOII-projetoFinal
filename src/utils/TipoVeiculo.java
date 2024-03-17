@@ -7,11 +7,11 @@ public enum TipoVeiculo {
     /**
      * The Hatch back.
      */
-    HATCH_BACK("HATCH BACK"),
+    PEQUENO("PEQUENO"),
     /**
      * Sedan tipo veiculo.
      */
-    SEDAN("SEDAN"),
+    MEDIO("MEDIO"),
     /**
      * Suv tipo veiculo.
      */

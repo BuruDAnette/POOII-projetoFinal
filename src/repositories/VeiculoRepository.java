@@ -18,6 +18,7 @@ public class VeiculoRepository implements IVeiculoRepository<Veiculo> {
     public VeiculoRepository() {
         this.listaVeiculos = new ArrayList<>();
     }
+    
 
     @Override
     public Veiculo salvar(Veiculo veiculo) {
