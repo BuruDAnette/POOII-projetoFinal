@@ -10,6 +10,14 @@ import src.models.Veiculo;
  * The type Veiculo repository.
  */
 public class VeiculoRepository implements IVeiculoRepository<Veiculo> {
+    //------------------------------CORES------------------------------//
+    public static final String RESET = "\033[0m";
+    public static final String RED_BOLD = "\033[1;31m";
+    public static final String GREEN_BOLD = "\033[1;32m";
+    public static final String BLACK_BOLD = "\033[1;30m";
+    public static final String PURPLE_BOLD = "\033[1;35m";
+    public static final String PURPLE_BACKGROUND = "\033[45m";
+
     private List<Veiculo> listaVeiculos;
 
     /**
@@ -28,7 +36,7 @@ public class VeiculoRepository implements IVeiculoRepository<Veiculo> {
             listaVeiculos.add(veiculo);
             return veiculo;
         }
-        System.out.println("Esse veículo já existe na base de dados.");
+        System.out.println(RED_BOLD + "ESSE VEÍCULO JA EXISTE NA BASE DE DADOS: " + veiculo.getPlaca() + RESET);
         return null;
     }
 
@@ -37,7 +45,7 @@ public class VeiculoRepository implements IVeiculoRepository<Veiculo> {
         Veiculo consultaVeiculo = consultar(veiculo.getPlaca());
 
         if (consultaVeiculo == null) {
-            throw new IllegalArgumentException("Esse veículo não existe na base de dados.");
+            throw new IllegalArgumentException(RED_BOLD + "ESSE VEÍCULO NÃO EXISTE NA BASE DE DADOS: " + veiculo.getPlaca() + RESET);
         }
         listaVeiculos.remove(veiculo);
         salvar(veiculo);

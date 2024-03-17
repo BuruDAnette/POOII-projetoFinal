@@ -14,6 +14,14 @@ import src.models.PessoaJuridica;
  * @param <T> the type parameter
  */
 public class PessoaRepository<T extends Pessoa> implements IPessoaRepository<T> {
+    //------------------------------CORES------------------------------//
+    public static final String RESET = "\033[0m";
+    public static final String RED_BOLD = "\033[1;31m";
+    public static final String GREEN_BOLD = "\033[1;32m";
+    public static final String BLACK_BOLD = "\033[1;30m";
+    public static final String PURPLE_BOLD = "\033[1;35m";
+    public static final String PURPLE_BACKGROUND = "\033[45m";
+
     private List<T> listaDeClientes;
 
     /**
@@ -26,7 +34,7 @@ public class PessoaRepository<T extends Pessoa> implements IPessoaRepository<T> 
     @Override
     public T salvar(T pessoa) {
         if (validaClienteNaBaseDeDados(pessoa)) {
-            System.out.println(pessoa instanceof PessoaFisica ? "CPF Já Existe na Base de Dados" : "CNPJ Já Existe na Base de Dados");
+            System.out.println(pessoa instanceof PessoaFisica ? RED_BOLD + "CPF JÁ EXISTE NA BASE DE DADOS" : "CNPJ JÁ EXISTE NA BASE DE DADOS" + RESET);
             return null;
         }
 

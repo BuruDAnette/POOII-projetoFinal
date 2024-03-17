@@ -7,6 +7,14 @@ import java.util.List;
 import src.utils.TipoVeiculo;
 
 public class Veiculo implements Comparable<Veiculo> {
+    //------------------------------CORES------------------------------//
+    public static final String RESET = "\033[0m";
+    public static final String RED_BOLD = "\033[1;31m";
+    public static final String GREEN_BOLD = "\033[1;32m";
+    public static final String BLACK_BOLD = "\033[1;30m";
+    public static final String PURPLE_BOLD = "\033[1;35m";
+    public static final String PURPLE_BACKGROUND = "\033[45m";
+
     private String placa;
     private String marca;
     private Boolean disponivel;
@@ -91,9 +99,9 @@ public class Veiculo implements Comparable<Veiculo> {
     }
     @Override
     public String toString() {
-        return "Placa: " + placa
-            + " | Marca: " + marca
-            + " | Tipo: " + tipoVeiculo.getNomeTipo()
-            + " | Status: " + (getDisponivel() ? "DISPONIVEL" : "NÃO DISPONIVEL");
+        return "PLACA: " + placa
+            + " | MARCA: " + marca
+            + " | TIPO: " + tipoVeiculo.getNomeTipo()
+            + " | STATUS: " + (getDisponivel() ? "DISPONIVEL" : "NÃO DISPONIVEL");
     }
 }

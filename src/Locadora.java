@@ -14,6 +14,14 @@ import src.models.Veiculo;
 import src.utils.TipoVeiculo;
 
 public class Locadora {
+    //------------------------------CORES------------------------------//
+    public static final String RESET = "\033[0m";
+    public static final String RED_BOLD = "\033[1;31m";
+    public static final String GREEN_BOLD = "\033[1;32m";
+    public static final String BLACK_BOLD = "\033[1;30m";
+    public static final String PURPLE_BOLD = "\033[1;35m";
+    public static final String PURPLE_BACKGROUND = "\033[45m";
+
     private HashMap<Veiculo, Pessoa> locadora;
     private String local;
 
@@ -32,17 +40,17 @@ public class Locadora {
         } else if (documento.matches("\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}")) {
             pessoa = pessoaRepository.consultarCNPJ(documento);
         } else {
-            System.out.println("Documento inválido.");
+            System.out.println(RED_BOLD + "DOCUMENTO INVÁLIDO" + RESET);
             return;
         }
 
         if (veiculo == null || pessoa == null) {
-            System.out.println("Veículo ou Pessoa não encontrado.");
+            System.out.println(RED_BOLD + "VEÍCULO OU PESSOA NÃO ENCONTRADO" + RESET);
             return;
         }
 
         if (locadora.containsKey(veiculo) || !veiculo.getDisponivel()) {
-            System.out.println("Veículo não está disponível: " + veiculo.getMarca());
+            System.out.println(RED_BOLD + "ESSE VEÍCULO JA ESTÁ ALUGADO: " + veiculo.getMarca() + veiculo.getPlaca() + RESET);
         } else {
             locadora.put(veiculo, pessoa);
             veiculo.setDiaAlugado(LocalDateTime.now());
@@ -55,7 +63,7 @@ public class Locadora {
         Veiculo veiculo = veiculoRepository.consultar(placa);
         
         if (veiculo == null || !locadora.containsKey(veiculo)) {
-            System.out.println("Veículo não encontrado ou não está alugado.");
+            System.out.println(RED_BOLD + "VEÍCULO NÃO ENCONTRADO OU NÃO ESTÁ ALUGADO" + RESET);
             return;
         }
         
@@ -77,7 +85,7 @@ public class Locadora {
     
     private int calcularQuantidadeDiarias(LocalDateTime dataAlugado, LocalDateTime dataDevolucao) {
         if (dataDevolucao.isBefore(dataAlugado)) {
-            throw new IllegalArgumentException("Data de devolução não pode ser anterior à data de aluguel.");
+            throw new IllegalArgumentException(RED_BOLD + "DATA DE DEVOLução DEVE SER POSTERIOR A DATA DE ALUGUEL" + RESET);
         }
     
         // Calcular diferença em dias
@@ -127,16 +135,16 @@ public class Locadora {
         // Implementação específica para gerar o recibo
         // Exemplo: gerar um PDF, enviar por email, etc.
 
-        System.out.println("### Recibo de Devolução ###");
-        System.out.println("Veículo: " + veiculo.getPlaca() + " - " + veiculo.getMarca());
-        System.out.println("Cliente: " + cliente.getNome());
-        System.out.println("Local: " + local);
-        System.out.println("Data de Devolução: " + LocalDateTime.now());
-        System.out.println("Quantidade de Diárias: " + quantidadeDiarias);
-        System.out.println("Valor Total: R$" + valorTotal);
-        System.out.println("Desconto: R$" + desconto);
-        System.out.println("Valor Final: R$" + valorFinal);
-        System.out.println("--------------------------");
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + "                      RECIBO DE DEVOLUÇÃO                      " + RESET);
+        System.out.println("VEÍCULO: " + veiculo.getPlaca() + " - " + veiculo.getMarca());
+        System.out.println("CLIENTE: " + cliente.getNome());
+        System.out.println("LOCAL: " + local);
+        System.out.println("DATA DE DEVOLUÇÃO: " + LocalDateTime.now());
+        System.out.println("NÚMERO DE DIÁRIAS: " + quantidadeDiarias);
+        System.out.println("VALOR TOTAL: " +  GREEN_BOLD + "R$" + valorTotal + RESET);
+        System.out.println("DESCONTO: " + RED_BOLD + "R$" + desconto + RESET);
+        System.out.println("VALOR FINAL: R$" + valorFinal);
+        System.out.println();
     }
 
 
