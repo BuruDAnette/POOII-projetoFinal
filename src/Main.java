@@ -1,6 +1,7 @@
 package src;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 import src.models.Pessoa;
 import src.models.PessoaFisica;
@@ -11,6 +12,8 @@ import src.repositories.VeiculoRepository;
 import src.utils.TipoVeiculo;
 
 public class Main {
+    private static final Scanner scanner = new Scanner(System.in);
+    
     //------------------------------CORES------------------------------//
     public static final String RESET = "\033[0m";
     public static final String RED_BOLD = "\033[1;31m";
@@ -19,64 +22,292 @@ public class Main {
     public static final String PURPLE_BOLD = "\033[1;35m";
     public static final String PURPLE_BACKGROUND = "\033[45m";
 
+    public static VeiculoRepository listaVeiculos = new VeiculoRepository();
+    public static PessoaRepository<Pessoa> listaClientes = new PessoaRepository<>();
+    public static Locadora locadora = new Locadora("Brasil");
+
     public static void main(String[] args) {
-        PessoaRepository<Pessoa> listaClientes = new PessoaRepository<>();
-        VeiculoRepository listaVeiculos = new VeiculoRepository();
-        Locadora locadora = new Locadora("Brasil");
-        
-        // Inserindo dados de teste
 
-        // Pessoas 
-        listaClientes.salvar(new PessoaFisica("Bruna Castro Morais", "123.543.478-98"));
-        listaClientes.salvar(new PessoaFisica("Bruna Castro Carvalho", "190.192.191-00")); // Repetido
-        listaClientes.salvar(new PessoaJuridica("Leonardo e Advocacia LL", "25.408.179/0001-41"));
-        listaClientes.salvar(new PessoaJuridica("Automóveis MG", "22.415.053/0001-06")); // Repetido
+        int opcao;
+        do {
+            exibirMenu();
+            opcao = scanner.nextInt();
 
-        // Veiculos
-        listaVeiculos.salvar(new Veiculo("MZU-3079", "Toyota", TipoVeiculo.SUV));
-        listaVeiculos.salvar(new Veiculo("MZU-3079", "Toyota", TipoVeiculo.SUV)); // Repetido
-        listaVeiculos.salvar(new Veiculo("MRH-1604", "Toyota", TipoVeiculo.MEDIO));
-
-        // Lista de Clientes 
-        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + "                       LISTA DE CLIENTES                       " + RESET);
-        listaClientes.listarTodos().forEach(System.out::println);
-        System.out.println();
-
-        // Lista de Veiculos    
-        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + "                       LISTA DE VEÍCULOS                       " + RESET);
-        listaVeiculos.listarTodos().forEach(System.out::println);
-        System.out.println();
-
-
-        // Consultas
-        if (listaClientes.consultarCNPJ("22.415.053/0001-07") != null) {
-            System.out.println(GREEN_BOLD + "CNPJ ENCONTRADA COM SUCESSO" + RESET);
-        } else {
-            System.out.println(RED_BOLD + "CNPJ NÃO ENCONTRADA" + RESET);
-        } //n acha
-
-        if (listaClientes.consultarCNPJ("25.408.179/0001-41") != null) {
-            System.out.println(GREEN_BOLD + "CNPJ ENCONTRADA COM SUCESSO" + RESET);
-        } else {
-            System.out.println(RED_BOLD + "CNPJ NÃO ENCONTRADA" + RESET);
-        }//acha
-
-
-        System.out.println();
-
-        // Aluguel
-        locadora.alugar(listaVeiculos, listaClientes, "MRH-1602", "22.415.053/0001-06"); //placa não existe
-        locadora.alugar(listaVeiculos, listaClientes, "MRH-1604", "190.192.191-00"); //vai alugar
-
-        // Lista de Veiculos    
-        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + "                       LISTA DE VEÍCULOS                       " + RESET);
-        listaVeiculos.listarTodos().forEach(System.out::println);
-        System.out.println();
-
-        // Devolução
-        locadora.devolver(listaVeiculos, "MRH-1604", LocalDateTime.now());
-
+            switch (opcao) {
+                case 1:
+                    cadastrarPessoa();
+                    break;
+                case 2:
+                    cadastrarVeiculo();
+                    break;
+                case 3:
+                    alugarVeiculo();
+                    break;
+                case 4:
+                    devolverVeiculo();
+                    break;
+                case 5:
+                    atualizarPessoa();
+                    break;
+                case 6: 
+                    atualizarVeiculo();
+                    break;
+                case 7:
+                    buscarPessoa();
+                    break;
+                case 8:
+                    buscarVeiculo();
+                    break;
+                case 9:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 9);
 
     }
+
+    private static void cadastrarPessoa() {
+
+        System.out.println();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD +" CADASTRO DE PESSOA " + RESET);
+        System.out.println(PURPLE_BOLD +"1." + BLACK_BOLD + " PESSOA FÍSICA" + RESET);
+        System.out.println(PURPLE_BOLD +"2." + BLACK_BOLD + " PESSOA JURÍDICA" + RESET);
+        System.out.println();
+        System.out.print("DIGITE A OPCÃO:");
+        int opcao = scanner.nextInt();
+        if (opcao == 1) {
+            System.out.println(PURPLE_BOLD + " VOCÊ DIGITOU 1 PARA PESSOA FÍSICA " + RESET);
+            System.out.println(PURPLE_BACKGROUND + BLACK_BOLD +" CADASTRO DE PESSOA FÍSICA " + RESET);
+            System.out.print("NOME: ");
+            scanner.next();
+            String nome = scanner.nextLine();
+            System.out.print("CPF: ");
+            String cpf = scanner.nextLine();
+            listaClientes.salvar(new PessoaFisica(nome, cpf));
+            System.out.println(GREEN_BOLD + "PESSOA FÍSICA CADASTRADA COM SUCESSO" + RESET);
+        } else if (opcao == 2) {
+            System.out.println(PURPLE_BOLD + " VOCÊ DIGITOU 2 PARA PESSOA JURÍDICA " + RESET);
+            System.out.println(PURPLE_BACKGROUND + BLACK_BOLD +" CADASTRO DE PESSOA JURÍDICA " + RESET);
+            System.out.print("NOME: ");
+            scanner.nextLine();
+            String nome = scanner.nextLine();
+            System.out.print("CNPJ: ");
+            String cnpj = scanner.nextLine();
+            listaClientes.salvar(new PessoaJuridica(nome, cnpj));
+            System.out.println(GREEN_BOLD + "PESSOA JURÍDICA CADASTRADA COM SUCESSO" + RESET);
+        } else {
+            System.out.println(RED_BOLD + "OPCAO INVALIDA" + RESET);
+        }
+        
+    }
     
+    private static void cadastrarVeiculo() {
+
+        System.out.println();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " CADASTRO DE VEÍCULO " + RESET);
+        System.out.print("PLACA: ");
+        String placa = scanner.nextLine();
+        System.out.print("MARCA: ");
+        String marca = scanner.nextLine();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " TIPOS DE VEÍCULO " + RESET);
+        System.out.println(PURPLE_BOLD +"1." + BLACK_BOLD + " PEQUENO" + RESET);
+        System.out.println(PURPLE_BOLD +"2." + BLACK_BOLD + " MEDIO" + RESET);
+        System.out.println(PURPLE_BOLD +"3." + BLACK_BOLD + " SUV" + RESET);
+        System.out.println();
+        System.out.print("DIGITE A OPCÃO:");
+        int opcao = scanner.nextInt();
+        if (opcao == 1) {
+            listaVeiculos.salvar(new Veiculo(placa, marca, TipoVeiculo.PEQUENO));
+            System.out.println(GREEN_BOLD + "VEÍCULO CADASTRADO COM SUCESSO" + RESET);
+        } else if (opcao == 2) {
+            listaVeiculos.salvar(new Veiculo(placa, marca, TipoVeiculo.MEDIO));
+            System.out.println(GREEN_BOLD + "VEÍCULO CADASTRADO COM SUCESSO" + RESET);
+        } else if (opcao == 3) {
+            listaVeiculos.salvar(new Veiculo(placa, marca, TipoVeiculo.SUV));
+            System.out.println(GREEN_BOLD + "VEÍCULO CADASTRADO COM SUCESSO" + RESET);
+        } else {
+            System.out.println(RED_BOLD + "OPCAO INVALIDA" + RESET);
+            
+        }
+    }
+    
+    private static void alugarVeiculo() {
+
+        System.out.println();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " ALUGUEL DE VEÍCULO " + RESET);
+        System.out.println(PURPLE_BOLD + "LISTA DE VEÍCULOS DISPONIVES" + RESET);
+        listaVeiculos.listarTodos().forEach(System.out::println);
+        System.out.println();
+        System.out.print("DIGITE A PLACA DO VEICULO QUE DESEJA ALUGAR: ");
+        String placa = scanner.nextLine();
+        if (listaVeiculos.consultar(placa) == null) {
+            System.out.println(RED_BOLD + "VEICULO NÃO ENCONTRADO" + RESET);
+        } else {
+            System.out.println(GREEN_BOLD + "VEICULO ENCONTRADO: " + placa + RESET);
+        }
+        System.out.println();
+        System.out.println(PURPLE_BOLD + "LISTA DE PESSOAS CADASTRADAS" + RESET);
+        listaClientes.listarTodos().forEach(System.out::println);   
+        System.out.println();
+        System.out.print("DIGITE CPF OU CNPJ DA PESSOA QUE DESEJA ALUGAR: ");
+        String documento = scanner.nextLine();
+        if (listaClientes.consultarCPF(documento) == null) {
+            System.out.println(RED_BOLD + "PESSOA FÍSICA NÃO ENCONTRADA" + RESET);
+        } else if (listaClientes.consultarCNPJ(documento) == null) {
+            System.out.println(RED_BOLD + "PESSOA JURIDICA NÃO ENCONTRADA" + RESET);
+        } else {
+            System.out.println(GREEN_BOLD + "PESSOA ENCONTRADA: " + documento + RESET);
+            locadora.alugar(listaVeiculos, listaClientes, placa, documento);
+            System.out.println(GREEN_BOLD + "ALUGUEL EFETIVADO COM SUCESSO" + RESET);
+        }
+    }
+    
+    private static void devolverVeiculo() {
+
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " DEVOLUCAO DE VEÍCULO " + RESET);
+        System.out.println(PURPLE_BOLD + "LISTA DE VEÍCULOS" + RESET);
+        listaVeiculos.listarTodos().forEach(System.out::println);
+        System.out.println();
+        System.out.print("DIGITE A PLACA DO VEICULO QUE DESEJA DEVOLVER: ");
+        String placa = scanner.nextLine();
+        if (listaVeiculos.consultar(placa) == null) {
+            System.out.println(RED_BOLD + "VEICULO NÃO ENCONTRADO" + RESET);
+        } else {
+            System.out.println(GREEN_BOLD + "VEICULO ENCONTRADO: " + placa + RESET);
+            locadora.devolver(listaVeiculos, placa, LocalDateTime.now());
+            System.out.println(GREEN_BOLD + "DEVOLUCAO EFETIVADA COM SUCESSO" + RESET);
+        }
+    }
+    
+    private static void atualizarPessoa() {
+        System.out.println();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " ATUALIZAR PESSOA " + RESET);
+        System.out.println(PURPLE_BOLD + "LISTA DE PESSOAS CADASTRADAS" + RESET);
+        listaClientes.listarTodos().forEach(System.out::println);
+        System.out.println();
+        System.out.print("DIGITE O DOCUMENTO DA PESSOA QUE DESEJA ATUALIZAR: ");
+        String documento = scanner.nextLine();
+        if (listaClientes.consultarCPF(documento) == null) {
+            System.out.println(RED_BOLD + "PESSOA FÍSICA NÃO ENCONTRADA" + RESET);
+        } else if (listaClientes.consultarCNPJ(documento) == null) {
+            System.out.println(RED_BOLD + "PESSOA JURIDICA NÃO ENCONTRADA" + RESET);
+        } else {
+            
+            System.out.println(GREEN_BOLD + "PESSOA ENCONTRADA " + documento + RESET);
+            scanner.nextLine();
+            System.out.print("DIGITE O NOVO NOME: ");
+            String novoNome = scanner.nextLine();
+            scanner.nextLine();
+            listaClientes.atualizar(new PessoaJuridica(novoNome, documento));
+            
+            System.out.println(GREEN_BOLD + "ATUALIZACAO EFETIVADA COM SUCESSO" + RESET);
+        }
+            
+    }
+    
+    private static void atualizarVeiculo() {
+
+        System.out.println();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " ATUALIZAR VEICULO " + RESET);
+        System.out.println(PURPLE_BOLD + "LISTA DE VEICULOS CADASTRADOS" + RESET);
+        listaVeiculos.listarTodos().forEach(System.out::println);
+        System.out.println();
+        System.out.print("DIGITE A PLACA DO VEICULO QUE DESEJA ATUALIZAR: ");
+        String placa = scanner.next();
+        if (listaVeiculos.consultar(placa) == null) {
+            System.out.println(RED_BOLD + "VEICULO NÃO ENCONTRADO" + RESET);
+        } else {
+
+            System.out.println(GREEN_BOLD + "VEICULO ENCONTRADO: " + placa + RESET);
+            System.out.println();
+            System.out.println(PURPLE_BOLD + "1." + BLACK_BOLD + " ATUALIZAR MARCA" + RESET);
+            System.out.println(PURPLE_BOLD + "2." + BLACK_BOLD + " ATUALIZAR TIPO" + RESET);
+            System.out.println();
+            System.out.print("DIGITE A OPCÃO: ");
+            int opcao = scanner.nextInt();
+            switch (opcao) {
+                case 1:
+                    scanner.nextLine();
+                    System.out.print("DIGITE A NOVA MARCA: ");
+                    String novaMarca = scanner.nextLine();
+                    listaVeiculos.atualizar(new Veiculo(placa, novaMarca, listaVeiculos.consultar(placa).getTipoVeiculo()));
+                    break;
+                case 2:
+                    scanner.nextLine();
+                    System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " TIPOS DE VEÍCULO " + RESET);
+                    System.out.println(PURPLE_BOLD +"1." + BLACK_BOLD + " PEQUENO" + RESET);
+                    System.out.println(PURPLE_BOLD +"2." + BLACK_BOLD + " MEDIO" + RESET);
+                    System.out.println(PURPLE_BOLD +"3." + BLACK_BOLD + " SUV" + RESET);
+                    System.out.println();
+                    System.out.print("DIGITE O NOVO TIPO:");
+                    int novoTipo = scanner.nextInt();
+                    if (novoTipo == 1) {
+                        listaVeiculos.salvar(new Veiculo(placa, listaVeiculos.consultar(placa).getMarca(), TipoVeiculo.PEQUENO));
+                        System.out.println(GREEN_BOLD + "VEÍCULO ATUALIZADO COM SUCESSO" + RESET);
+                    } else if (novoTipo == 2) {
+                        listaVeiculos.salvar(new Veiculo(placa, listaVeiculos.consultar(placa).getMarca(), TipoVeiculo.MEDIO));
+                        System.out.println(GREEN_BOLD + "VEÍCULO ATUALIZADO COM SUCESSO" + RESET);
+                    } else if (novoTipo == 3) {
+                        listaVeiculos.salvar(new Veiculo(placa, listaVeiculos.consultar(placa).getMarca(), TipoVeiculo.SUV));
+                        System.out.println(GREEN_BOLD + "VEÍCULO ATUALIZADO COM SUCESSO" + RESET);
+                    } else {
+                        System.out.println(RED_BOLD + "TIPO INVALIDO" + RESET);
+                        
+                    }
+                    break;
+                default:
+                    System.out.println(RED_BOLD + "OPCAO INVALIDA" + RESET);
+                    break;
+                
+            }
+            
+        }
+    }
+    
+    private static void buscarVeiculo() {
+        System.out.println();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " BUSCAR VEICULO " + RESET);
+        System.out.println(PURPLE_BOLD + "LISTA DE VEICULOS CADASTRADOS" + RESET);
+        listaVeiculos.listarTodos().forEach(System.out::println);
+        System.out.println();
+        System.out.print("DIGITE A PLACA DO VEICULO QUE DESEJA BUSCAR: ");
+        String placa = scanner.next();
+        if (listaVeiculos.consultar(placa) == null) {
+            System.out.println(RED_BOLD + "VEICULO NÃO ENCONTRADO" + RESET);
+        } else {
+            System.out.println(GREEN_BOLD + "VEICULO ENCONTRADO: " + placa + RESET);
+            listaVeiculos.toString();
+        }
+    }
+
+
+    private static void buscarPessoa() {
+
+        System.out.println();
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " BUSCAR PESSOA " + RESET);
+        System.out.println(PURPLE_BOLD + "LISTA DE PESSOAS CADASTRADAS" + RESET);
+        listaClientes.listarTodos().forEach(System.out::println);
+        System.out.println();
+        System.out.println("DIGITE O CPF OU CNPJ DA PESSOA QUE DESEJA BUSCAR: ");
+        String documento = scanner.next();
+            System.out.println(GREEN_BOLD + "PESSOA ENCONTRADA: " + documento + RESET);
+            System.out.println("PESSOA: " + listaClientes.consultarCPF(documento));
+        
+    }
+
+    private static void exibirMenu() {
+        System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + "                        LOCADORA BRASIL                        " + RESET);
+        System.out.println(PURPLE_BOLD + "1." + BLACK_BOLD + " CADASTRAR PESSOA" + RESET);
+        System.out.println(PURPLE_BOLD + "2." + BLACK_BOLD + " CADASTRAR VEÍCULO" + RESET);
+        System.out.println(PURPLE_BOLD + "3." + BLACK_BOLD + " ALUGAR VEÍCULO" + RESET);
+        System.out.println(PURPLE_BOLD + "4." + BLACK_BOLD + " DEVOLVER VEÍCULO" + RESET);
+        System.out.println(PURPLE_BOLD + "5." + BLACK_BOLD + " ATUALIZAR PESSOA" + RESET);
+        System.out.println(PURPLE_BOLD + "6." + BLACK_BOLD + " ATUALIZAR VEÍCULO" + RESET);
+        System.out.println(PURPLE_BOLD + "7." + BLACK_BOLD + " BUSCAR PESSOA" + RESET);
+        System.out.println(PURPLE_BOLD + "8." + BLACK_BOLD + " BUSCAR VEÍCULO" + RESET);
+        System.out.println(PURPLE_BOLD + "9." + BLACK_BOLD + " SAIR" + RESET);
+        System.out.println();
+        System.out.print("DIGITE A OPCÃO: ");
+    }
 }
