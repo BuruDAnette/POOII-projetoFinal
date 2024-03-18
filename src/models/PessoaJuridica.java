@@ -35,11 +35,6 @@ public class PessoaJuridica extends Pessoa {
         this.cnpj = cnpj;
     }
 
-    /**
-     * To string string.
-     *
-     * @return the string
-     */
     @Override
     public String toString() {
         return "PJ: " + getNome() + " | CNPJ: " + cnpj;

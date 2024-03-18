@@ -13,23 +13,57 @@ import src.models.Recibo;
 import src.models.Veiculo;
 import src.utils.TipoVeiculo;
 
+/**
+ * The type Locadora.
+ */
 public class Locadora {
-    //------------------------------CORES------------------------------//
+    /**
+     * The constant RESET.
+     */
+//------------------------------CORES------------------------------//
     public static final String RESET = "\033[0m";
+    /**
+     * The constant RED_BOLD.
+     */
     public static final String RED_BOLD = "\033[1;31m";
+    /**
+     * The constant GREEN_BOLD.
+     */
     public static final String GREEN_BOLD = "\033[1;32m";
+    /**
+     * The constant BLACK_BOLD.
+     */
     public static final String BLACK_BOLD = "\033[1;30m";
+    /**
+     * The constant PURPLE_BOLD.
+     */
     public static final String PURPLE_BOLD = "\033[1;35m";
+    /**
+     * The constant PURPLE_BACKGROUND.
+     */
     public static final String PURPLE_BACKGROUND = "\033[45m";
 
     private HashMap<Veiculo, Pessoa> locadora;
     private String local;
 
+    /**
+     * Instantiates a new Locadora.
+     *
+     * @param local the local
+     */
     public Locadora(String local) {
         locadora = new HashMap<>();
         this.local = local;
     }
 
+    /**
+     * Alugar.
+     *
+     * @param veiculoRepository the veiculo repository
+     * @param pessoaRepository  the pessoa repository
+     * @param placa             the placa
+     * @param documento         the documento
+     */
     public void alugar(IVeiculoRepository<Veiculo> veiculoRepository, IPessoaRepository<Pessoa> pessoaRepository, String placa, String documento) {
         Veiculo veiculo = veiculoRepository.consultar(placa);
         Pessoa pessoa;
@@ -59,6 +93,13 @@ public class Locadora {
         }
     }
 
+    /**
+     * Devolver.
+     *
+     * @param veiculoRepository the veiculo repository
+     * @param placa             the placa
+     * @param dataDevolucao     the data devolucao
+     */
     public void devolver(IVeiculoRepository<Veiculo> veiculoRepository, String placa, LocalDateTime dataDevolucao) {
         Veiculo veiculo = veiculoRepository.consultar(placa);
         

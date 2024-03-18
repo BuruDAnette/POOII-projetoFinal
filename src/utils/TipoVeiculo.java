@@ -5,11 +5,11 @@ package src.utils;
  */
 public enum TipoVeiculo {
     /**
-     * The Hatch back.
+     * Pequeno tipo veiculo.
      */
     PEQUENO("PEQUENO"),
     /**
-     * Sedan tipo veiculo.
+     * Medio tipo veiculo.
      */
     MEDIO("MEDIO"),
     /**

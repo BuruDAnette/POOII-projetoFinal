@@ -33,13 +33,6 @@ public abstract class Pessoa implements Comparable<Pessoa> {
         this.nome = nome;
     }
 
-    /**
-     * Compare to int.
-     *
-     * @param outraPessoa the outra pessoa
-     * @return the int
-     */
-    
     @Override
     public int compareTo(Pessoa outraPessoa) {
         return this.getNome().compareTo(outraPessoa.getNome());

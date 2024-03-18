@@ -1,33 +1,44 @@
 # ADA LocateCar - Locadora de veículos
 
-Cria uma aplicação que gerencie o aluguel de veículos, aplicando os conceitos vistos em aula, onde cada item abaixo seja considerado:
+Este projeto implementa um sistema de aluguel de carros em Java. As principais funcionalidades incluem:
 
-## Itens obrigatórios
+    * Alugar um carro por placa e documento do cliente (CPF ou CNPJ)
+    * Devolver um carro pela placa e registrar a data de devolução
+    * Calcular o custo do aluguel com base no tipo de carro e na duração do aluguel
+    * Cadastro, busca e atualização de clientes e veículos
 
-    Cadastrar os veículos;
-    Alterar um veículo cadastrado;
-    Buscar um veículo por parte do nome;
-    Cadastrar o cliente (pessoa física e jurídica)
-    Alterar o cliente (pessoa física e jurídica)
-    Alugar um veículo para pessoa física e jurídica;
-    Devolver um veículo para pessoa física e jurídica;
+### O código segue vários princípios importantes de programação orientada a objetos:
 
-### Regras de negócio
+### Princípios SOLID
 
-    RN1: Os veículos não podem ser repetidos; Pode utilizar a placa como identificador de unicidade;
-    RN2: Tipos de veículos que serão considerados: PEQUENO, MEDIO e SUV;
-    RN3: Os aluguéis e devoluções terão o local, data e horário;
-    RN4: Considere aluguel em horas quebradas como uma diária completa. Exemplo: uma devolução de um veículo alugado no dia 25 de janeiro às 15h30 será cobrado uma (1) diária até dia 26 de janeiro às 15h30, a partir desse horário já serão cobradas duas (2) diárias e assim por diante.
-    RN5: Os veículos que estiverem alugados não poderão estar disponíveis;
-    RN6: Clientes não podem estar duplicados; Considerar CPF (Pessoa Física) e CNPJ (Pessoa Jurídica) como identificadores de unicidade;
-    RN7: Regras de devolução:
-        Caso o cliente pessoa física tenha ficado com o carro mais que 5 diárias terá direito a 5% de desconto.
-        Caso o cliente pessoa jurídica tenha ficado com o carro mais que 3 diárias terá direito a 10% de desconto.
+    * SRP (Single Responsibility Principle)
+    
+        Classe Veiculo:
+            Responsabilidade única: Armazenar e fornecer informações sobre o veículo.
+    
+        Classe Pessoa:
+            Responsa'bilidade única: Armazenar e fornecer informações sobre a pessoa.
 
-* Valores base da diária por tipo de veículo:
+    * Genéricos
+    
+        Classe CalculadoraDesconto:
+            Usa genéricos para calcular o desconto para qualquer tipo de veículo.
+            Permite maior flexibilidade e reutilização de código.
+    
+      * Comparable
+    
+          Classe Veiculo:
+              Implementa a interface Comparable para permitir a ordenação por placa.
+              Permite a ordenação eficiente da lista de veículos.
 
-| Tipo de Veículo | Valor por dia | | --------------- | ------------- | | PEQUENO | R100,00∣∣MEDIO∣R100,00∣∣MEDIO∣R 150,00 | | SUV | R$ 200,00 |
-Itens bônus - Opcionais
+### Facilidade de implementação
 
-    Paginar as listagem envolvidas;
-    Gravar os dados em arquivos;
+    Interfaces e Genéricos foram relativamente fáceis de implementar. 
+
+    Collections como HashMap eram familiares e fáceis de usar para gerenciar dados de veículo e pessoa.
+
+    A interface Comparable também foi simples de implementar, permitindo a ordenação de veículos.
+
+### Dificuldades encontradas
+
+    Os princípios SOLID precisou de tempo para implementação.

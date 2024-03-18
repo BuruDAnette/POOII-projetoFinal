@@ -11,21 +11,56 @@ import src.repositories.PessoaRepository;
 import src.repositories.VeiculoRepository;
 import src.utils.TipoVeiculo;
 
+/**
+ * The type Main.
+ */
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    
-    //------------------------------CORES------------------------------//
+
+    /**
+     * The constant RESET.
+     */
+
     public static final String RESET = "\033[0m";
+    /**
+     * The constant RED_BOLD.
+     */
     public static final String RED_BOLD = "\033[1;31m";
+    /**
+     * The constant GREEN_BOLD.
+     */
     public static final String GREEN_BOLD = "\033[1;32m";
+    /**
+     * The constant BLACK_BOLD.
+     */
     public static final String BLACK_BOLD = "\033[1;30m";
+    /**
+     * The constant PURPLE_BOLD.
+     */
     public static final String PURPLE_BOLD = "\033[1;35m";
+    /**
+     * The constant PURPLE_BACKGROUND.
+     */
     public static final String PURPLE_BACKGROUND = "\033[45m";
 
+    /**
+     * The constant listaVeiculos.
+     */
     public static VeiculoRepository listaVeiculos = new VeiculoRepository();
+    /**
+     * The constant listaClientes.
+     */
     public static PessoaRepository<Pessoa> listaClientes = new PessoaRepository<>();
+    /**
+     * The constant locadora.
+     */
     public static Locadora locadora = new Locadora("Brasil");
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
 
         int opcao;
@@ -107,9 +142,9 @@ public class Main {
         System.out.println();
         System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " CADASTRO DE VEÍCULO " + RESET);
         System.out.print("PLACA: ");
-        String placa = scanner.nextLine();
+        String placa = scanner.next();
         System.out.print("MARCA: ");
-        String marca = scanner.nextLine();
+        String marca = scanner.next();
         System.out.println(PURPLE_BACKGROUND + BLACK_BOLD + " TIPOS DE VEÍCULO " + RESET);
         System.out.println(PURPLE_BOLD +"1." + BLACK_BOLD + " PEQUENO" + RESET);
         System.out.println(PURPLE_BOLD +"2." + BLACK_BOLD + " MEDIO" + RESET);
@@ -140,7 +175,7 @@ public class Main {
         listaVeiculos.listarTodos().forEach(System.out::println);
         System.out.println();
         System.out.print("DIGITE A PLACA DO VEICULO QUE DESEJA ALUGAR: ");
-        String placa = scanner.nextLine();
+        String placa = scanner.next();
         if (listaVeiculos.consultar(placa) == null) {
             System.out.println(RED_BOLD + "VEICULO NÃO ENCONTRADO" + RESET);
         } else {
@@ -151,16 +186,18 @@ public class Main {
         listaClientes.listarTodos().forEach(System.out::println);   
         System.out.println();
         System.out.print("DIGITE CPF OU CNPJ DA PESSOA QUE DESEJA ALUGAR: ");
-        String documento = scanner.nextLine();
-        if (listaClientes.consultarCPF(documento) == null) {
-            System.out.println(RED_BOLD + "PESSOA FÍSICA NÃO ENCONTRADA" + RESET);
-        } else if (listaClientes.consultarCNPJ(documento) == null) {
-            System.out.println(RED_BOLD + "PESSOA JURIDICA NÃO ENCONTRADA" + RESET);
-        } else {
-            System.out.println(GREEN_BOLD + "PESSOA ENCONTRADA: " + documento + RESET);
-            locadora.alugar(listaVeiculos, listaClientes, placa, documento);
-            System.out.println(GREEN_BOLD + "ALUGUEL EFETIVADO COM SUCESSO" + RESET);
-        }
+        String documento = scanner.next();
+        
+            if (documento.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+                System.out.println("PESSOA FISICA: " + listaClientes.consultarCPF(documento));
+                locadora.alugar(listaVeiculos, listaClientes, placa, documento);
+            } else if (documento.matches("\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}")) {
+                System.out.println("PESSOA JURIDICA: " + listaClientes.consultarCNPJ(documento));
+                locadora.alugar(listaVeiculos, listaClientes, placa, documento);
+            } else {
+                System.out.println(RED_BOLD + "DOCUMENTO NÃO ENCONTRADO " + RESET);
+            }
+        
     }
     
     private static void devolverVeiculo() {
@@ -170,7 +207,7 @@ public class Main {
         listaVeiculos.listarTodos().forEach(System.out::println);
         System.out.println();
         System.out.print("DIGITE A PLACA DO VEICULO QUE DESEJA DEVOLVER: ");
-        String placa = scanner.nextLine();
+        String placa = scanner.next();
         if (listaVeiculos.consultar(placa) == null) {
             System.out.println(RED_BOLD + "VEICULO NÃO ENCONTRADO" + RESET);
         } else {
@@ -187,7 +224,7 @@ public class Main {
         listaClientes.listarTodos().forEach(System.out::println);
         System.out.println();
         System.out.print("DIGITE O DOCUMENTO DA PESSOA QUE DESEJA ATUALIZAR: ");
-        String documento = scanner.nextLine();
+        String documento = scanner.next();
         if (listaClientes.consultarCPF(documento) == null) {
             System.out.println(RED_BOLD + "PESSOA FÍSICA NÃO ENCONTRADA" + RESET);
         } else if (listaClientes.consultarCNPJ(documento) == null) {
@@ -197,7 +234,7 @@ public class Main {
             System.out.println(GREEN_BOLD + "PESSOA ENCONTRADA " + documento + RESET);
             scanner.nextLine();
             System.out.print("DIGITE O NOVO NOME: ");
-            String novoNome = scanner.nextLine();
+            String novoNome = scanner.next();
             scanner.nextLine();
             listaClientes.atualizar(new PessoaJuridica(novoNome, documento));
             
@@ -277,7 +314,7 @@ public class Main {
             System.out.println(RED_BOLD + "VEICULO NÃO ENCONTRADO" + RESET);
         } else {
             System.out.println(GREEN_BOLD + "VEICULO ENCONTRADO: " + placa + RESET);
-            listaVeiculos.toString();
+            System.out.println(listaVeiculos.consultar(placa));
         }
     }
 
@@ -292,7 +329,12 @@ public class Main {
         System.out.println("DIGITE O CPF OU CNPJ DA PESSOA QUE DESEJA BUSCAR: ");
         String documento = scanner.next();
             System.out.println(GREEN_BOLD + "PESSOA ENCONTRADA: " + documento + RESET);
-            System.out.println("PESSOA: " + listaClientes.consultarCPF(documento));
+            if (documento.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+                System.out.println("PESSOA FISICA: " + listaClientes.consultarCPF(documento));
+            } else {
+                System.out.println("PESSOA JURIDICA: " + listaClientes.consultarCNPJ(documento));
+            }
+            
         
     }
 
